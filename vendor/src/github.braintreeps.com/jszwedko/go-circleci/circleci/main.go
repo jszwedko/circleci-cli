@@ -11,7 +11,7 @@ import (
 	"text/tabwriter"
 	"time"
 
-	"github.braintreeps.com/jszwedko/go-circleci"
+	"github.braintreeps.com/jszwedko/circleci"
 
 	"github.com/codegangsta/cli"
 	"github.com/fatih/color"
