@@ -14,9 +14,9 @@
 			"branch": "master"
 		},
 		{
-			"importpath": "github.braintreeps.com/jszwedko/go-circleci",
-			"repository": "https://github.braintreeps.com/jszwedko/go-circleci",
-			"revision": "eadce6ba1a78d1cf19e3ad744a74d5f61af44e9a",
+			"importpath": "github.com/jszwedko/go-circleci",
+			"repository": "https://github.com/jszwedko/go-circleci",
+			"revision": "bb6ee57a9cae4c552f86505909ab85d4d8a21ad2",
 			"branch": "master"
 		},
 		{

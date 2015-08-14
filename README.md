@@ -5,7 +5,7 @@ CLI for interacting with CircleCI's API.
 Allows you to list recent builds, projects, retry builds, and more.
 
 For the Go library this uses, see:
-[go-circleci](https://github.braintreeps.com/jszwedko/go-circleci).
+[go-circleci](https://github.com/jszwedko/go-circleci).
 
 Currently in alpha stages so the interface may change. Feedback and feature
 requests are welcome! Install and run `circle -h` to see current help
