@@ -1,45 +1,40 @@
 VERSION := $(shell git describe --tags --always --dirty)
 REVISION := $(shell git rev-parse --sq HEAD)
-COVERAGEOUT := coverage.out
 .DEFAULT_GOAL := check
 
 ifndef GOBIN
 GOBIN := $(shell echo "$${GOPATH%%:*}/bin")
 endif
 
+GOPATH := "$(PWD):$(PWD)/vendor"
+
 LINT := $(GOBIN)/golint
+GB := $(GOBIN)/gb
+GOX := $(GOBIN)/gox
 
 $(LINT): ; @go get github.com/golang/lint/golint
+$(GB): ; @go get github.com/constabulary/gb/...
+$(GOX): ; @go get -v github.com/mitchellh/gox
 
 .PHONY: build
-build:
-	@go build -ldflags "-X main.VersionString $(VERSION) -X main.RevisionString $(REVISION)" ./...
+build: $(GB)
+	@$(GB) build -ldflags "-X main.VersionString $(VERSION) -X main.RevisionString $(REVISION)" ./...
 
-.PHONY: install
-install:
-	@go install -ldflags "-X main.VersionString $(VERSION) -X main.RevisionString $(REVISION)" ./...
-
-.PHONY: clean
-clean:
-	@go clean -i ./...
-	@rm -f $(COVERAGEOUT)
+.PHONY: dist
+dist: $(GB) $(GOX)
+	@GOPATH=$(GOPATH) $(GOX) -ldflags "-X main.VersionString $(VERSION) -X main.RevisionString $(REVISION)" -os 'linux darwin windows' -arch '386 amd64'  -output 'dist/{{.OS}}_{{.Arch}}' circleci
 
 .PHONY: vet
 vet:
-	@go vet ./...
+	@GOPATH=$GOPATH go vet ./...
 
 .PHONY: lint
 lint: $(LINT)
-	@exit $$($(LINT) ./... | tee /dev/tty | wc -l)
-
-.PHONY: cover
-cover:
-	@go test -coverprofile=$(COVERAGEOUT)
-	@go tool cover -html=$(COVERAGEOUT)
+	@exit $$(GOPATH=$(GOPATH) $(LINT) circleci | tee /dev/tty | wc -l)
 
 .PHONY: test
 test:
-	@go test
+	@gb test
 
 .PHONY: check
-check: vet lint test
+check: vet lint test build

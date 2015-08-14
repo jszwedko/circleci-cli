@@ -1,12 +1,28 @@
-## circleci
+## circleci-cli
 
-Go library and CLI for interacting with CircleCI's API.
+CLI for interacting with CircleCI's API.
 
-Currently a work-in-progress, so please see:
-- `godoc github.braintreeps.com/jszwedko/circleci` for API usage
-- `circleci -h` for the current CLI usage
+Allows you to list recent builds, projects, retry builds, and more.
 
-To install the CLI (this will change once things have stabilized):
-- `git clone github.braintreeps.com/jszwedko/circleci $GOPATH/src/github.braintreeps.com/jszwedko/circleci`
-- `cd $GOPATH/src/github.braintreeps.com/jszwedko/circleci`
-- `make install`
+For the Go library this uses, see:
+[go-circleci](https://github.braintreeps.com/jszwedko/go-circleci).
+
+Currently in alpha stages so the interface may change. Feedback and feature
+requests are welcome! Install and run `circle -h` to see current help
+documentation.
+
+To install:
+- Download appropriate binaries for your architecture from the releases page
+- Install somewhere in your `$PATH`
+- Set `$CIRCLE_TOKEN` to an API token (you can generate one under your account
+  settings). Consider adding this to your `~/.profile` or shell equivalent.
+
+### Developing
+
+Uses [`gb`](http://getgb.io/) to build, running `make build` should install `gb` if needed.
+
+- Building: `make build`
+- Testing: `make test`
+- Building cross compiled binaries: `make dist` (will install
+  [gox](https://github.com/mitchellh/gox) if needed, but you may need to
+  bootstrap via `gox -build-toolchain`)
