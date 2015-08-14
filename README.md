@@ -12,7 +12,7 @@ requests are welcome! Install and run `circle -h` to see current help
 documentation.
 
 To install:
-- Download appropriate binaries for your architecture from the [releases](https://github.com/jszwedko/circleci-cli/releases) page
+- Download appropriate binary for your architecture from the [releases](https://github.com/jszwedko/circleci-cli/releases) page
 - Install somewhere in your `$PATH`
 - Set `$CIRCLE_TOKEN` to an API token (you can generate one under your account
   settings). Consider adding this to your `~/.profile` or shell equivalent.
