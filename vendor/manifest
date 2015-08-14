@@ -14,6 +14,12 @@
 			"branch": "master"
 		},
 		{
+			"importpath": "github.braintreeps.com/jszwedko/go-circleci",
+			"repository": "https://github.braintreeps.com/jszwedko/go-circleci",
+			"revision": "eadce6ba1a78d1cf19e3ad744a74d5f61af44e9a",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/mattn/go-isatty",
 			"repository": "https://github.com/mattn/go-isatty",
 			"revision": "7fcbc72f853b92b5720db4a6b8482be612daef24",
