@@ -1,4 +1,2 @@
-bin
-pkg
-vendor/pkg
 dist
+circleci-cli
