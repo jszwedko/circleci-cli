@@ -16,7 +16,7 @@
 		{
 			"importpath": "github.com/jszwedko/go-circleci",
 			"repository": "https://github.com/jszwedko/go-circleci",
-			"revision": "bb6ee57a9cae4c552f86505909ab85d4d8a21ad2",
+			"revision": "5b835f534b5a82624334fce9ba8c28140a68d135",
 			"branch": "master"
 		},
 		{
