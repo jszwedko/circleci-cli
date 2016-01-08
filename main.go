@@ -344,7 +344,7 @@ func main() {
 				fmt.Fprintf(t, "Trigger\t%s\n", build.Why)
 				fmt.Fprintf(t, "Author\t%s\n", build.AuthorName)
 				fmt.Fprintf(t, "Committer\t%s\n", build.CommitterName)
-				fmt.Fprintf(t, "Status\t%s\n", build.Status)
+				fmt.Fprintf(t, "Status\t%s\n", statusSprintfFunc(build.Status)(build.Status))
 
 				fmt.Fprintf(t, "Build Parameters\t\n")
 				if len(build.BuildParameters) == 0 {
