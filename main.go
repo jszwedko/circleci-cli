@@ -104,6 +104,8 @@ func (p *Project) String() string {
 }
 
 func main() {
+	currentProject := getCurrentProject()
+
 	app := cli.NewApp()
 	app.Name = "circleci"
 	app.Usage = "Tool for interacting with the CircleCI API"
@@ -222,7 +224,7 @@ func main() {
 				},
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Show all builds for specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -283,7 +285,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Show build for specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -377,7 +379,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Show artifacts for specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -429,7 +431,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Show build for specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -474,7 +476,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Show build for specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -509,7 +511,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Cancel build for specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -542,7 +544,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Trigger build for specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -581,7 +583,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Clear cache of specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -604,7 +606,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Add env var to specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -633,7 +635,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Delete env var from specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -662,7 +664,7 @@ func main() {
 			Flags: []cli.Flag{
 				cli.GenericFlag{
 					Name:   "project, p",
-					Value:  currentProject(),
+					Value:  currentProject,
 					Usage:  "Add SSH key to specified project rather than the current",
 					EnvVar: "CIRCLE_PROJECT",
 				},
@@ -692,10 +694,10 @@ func main() {
 	}
 }
 
-func currentProject() *Project {
+func getCurrentProject() *Project {
 	output, err := exec.Command("git", "remote", "-v").CombinedOutput()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "warning: could not determine current project, %s: %s\n", err, string(output))
+		fmt.Fprintf(os.Stderr, "warning: could not determine current project, %s: %s", err, string(output))
 		return &Project{}
 	}
 
