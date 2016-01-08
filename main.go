@@ -309,9 +309,10 @@ func main() {
 			},
 			Action: func(c *cli.Context) {
 				var (
-					build   *circleci.Build
-					err     error
-					project = c.Generic("project").(*Project)
+					buildNum int
+					build    *circleci.Build
+					err      error
+					project  = c.Generic("project").(*Project)
 				)
 
 				if !c.IsSet("build-num") {
@@ -327,12 +328,15 @@ func main() {
 					}
 
 					build = builds[0]
+					buildNum = builds[0].BuildNum
 				} else {
-					build, err = Client.GetBuild(project.Account, project.Repository, c.Int("build-num"))
-					if err != nil {
-						fmt.Fprintln(os.Stderr, err.Error())
-						os.Exit(1)
-					}
+					buildNum = c.Int("build-num")
+				}
+
+				build, err = Client.GetBuild(project.Account, project.Repository, buildNum)
+				if err != nil {
+					fmt.Fprintln(os.Stderr, err.Error())
+					os.Exit(1)
 				}
 
 				t := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
