@@ -1,10 +1,21 @@
+machine:
+  environment:
+    IMPORT_PATH: "github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+    GO15VENDOREXPERIMENT: 1
+    GOPATH: /home/ubuntu/.go_workspace
 dependencies:
   override:
+  - sudo rm -rf /usr/local/go
+  - curl https://storage.googleapis.com/golang/go1.5.2.linux-amd64.tar.gz | sudo tar -C /usr/local -xz
+
   # Remove cached Go sources
   - rm -rf $HOME/.go_workspace
+
+  - mkdir -p "$GOPATH/src/$IMPORT_PATH"
+  - rsync -va --delete ./ "$GOPATH/src/$IMPORT_PATH/"
 test:
   override:
-  - make check
+  - cd $GOPATH/src/$IMPORT_PATH && make check
 experimental:
   notify:
     branches:
