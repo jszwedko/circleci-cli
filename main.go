@@ -370,7 +370,7 @@ func main() {
 					printBuild(build, c.Int("build-node"), c.Bool("verbose"))
 				} else {
 					for i := 0; i < build.Parallel; i++ {
-						fmt.Printf("\nBuild %d\n", i)
+						fmt.Printf("\nNode %d\n", i)
 						printBuild(build, i, c.Bool("verbose"))
 					}
 				}
