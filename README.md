@@ -10,7 +10,7 @@ Currently in alpha stages so the interface may change. Feedback and feature
 requests are welcome! Install and run `circleci-cli -h` to see current help
 documentation.
 
-**The CircleCI HTTP API response schemas are not well documented so please report any issues you witness**
+**The CircleCI HTTP API response schemas (which this utility uses) are not well documented so please report any issues you witness**
 
 ## Installing
 
