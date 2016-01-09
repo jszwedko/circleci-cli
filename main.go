@@ -750,8 +750,8 @@ func printBuild(build *circleci.Build, i int, verbose bool) {
 		}
 		fmt.Println()
 
-		if action.Command != step.Name {
-			fmt.Printf("\t%s\n", action.Command)
+		if action.Name != step.Name {
+			fmt.Printf("\t%s\n", action.Name)
 		}
 
 		if verbose && action.HasOutput {
