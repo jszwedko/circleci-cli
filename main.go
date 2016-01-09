@@ -761,7 +761,7 @@ func printBuild(build *circleci.Build, i int, verbose bool) {
 				fmt.Fprintf(os.Stderr, "error retrieving action output: %s\n", err)
 			}
 			for _, output := range outputs {
-				fmt.Println(output.Message)
+				fmt.Println(strings.Trim(output.Message, "\n"))
 			}
 			fmt.Println()
 		}
