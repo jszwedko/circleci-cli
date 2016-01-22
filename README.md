@@ -17,7 +17,7 @@ documentation.
 #### OS X (64 bit)
 
 ```bash
-curl -sL https://github.com/jszwedko/circleci-cli/releases/download/0.0.1/darwin_amd64 > circleci-cli
+curl -sL https://github.com/jszwedko/circleci-cli/releases/download/0.1.0/darwin_amd64 > circleci-cli
 sudo mv circleci-cli /usr/local/bin/
 sudo chmod +x /usr/local/bin/circleci-cli
 ```
@@ -25,7 +25,7 @@ sudo chmod +x /usr/local/bin/circleci-cli
 #### Linux (64 bit)
 
 ```bash
-curl -sL https://github.com/jszwedko/circleci-cli/releases/download/0.0.1/linux_amd64 > circleci-cli
+curl -sL https://github.com/jszwedko/circleci-cli/releases/download/0.1.0/linux_amd64 > circleci-cli
 sudo mv circleci-cli /usr/local/bin/
 sudo chmod +x /usr/local/bin/circleci-cli
 ```
