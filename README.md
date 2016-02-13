@@ -1,4 +1,4 @@
-## circleci-cli [![Circle CI](https://circleci.com/gh/jszwedko/circleci-cli.svg?style=svg)](https://circleci.com/gh/jszwedko/circleci-cli)
+## circleci-cli [![Circle CI](https://circleci.com/gh/jszwedko/circleci-cli.svg?style=svg)](https://circleci.com/gh/jszwedko/circleci-cli) [![Go Report Card](https://goreportcard.com/badge/github.com/jszwedko/circleci-cli)](https://goreportcard.com/report/github.com/jszwedko/circleci-cli)
 
 Command line utility for interacting with CircleCI.
 

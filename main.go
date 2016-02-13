@@ -57,7 +57,7 @@ type Filter string
 
 var validFilters = []string{"completed", "successful", "failed", "running"}
 
-// Set satifies the cli.Generic interface
+// Set satisfies the cli.Generic interface
 // Ensures that the value is one of the valid filters
 func (f *Filter) Set(value string) error {
 	for _, filter := range validFilters {
@@ -81,7 +81,7 @@ type Project struct {
 	Repository string
 }
 
-// Set satifies the cli.Generic interface
+// Set satisfies the cli.Generic interface
 // Parses the value into the account and repo
 func (p *Project) Set(value string) error {
 	parts := strings.SplitN(value, "/", 2)
@@ -136,7 +136,7 @@ func main() {
 		return nil
 	}
 	app.Commands = []cli.Command{
-		cli.Command{
+		{
 			Name:  "projects",
 			Usage: "Print projects",
 			Flags: []cli.Flag{
@@ -200,7 +200,7 @@ func main() {
 				}
 			},
 		},
-		cli.Command{
+		{
 			Name:    "recent-builds",
 			Aliases: []string{"recent"},
 			Usage:   "Recent builds for the current project",
@@ -279,7 +279,7 @@ func main() {
 				t.Flush()
 			},
 		},
-		cli.Command{
+		{
 			Name:  "show",
 			Usage: "Show details for build",
 			Flags: []cli.Flag{
@@ -377,7 +377,7 @@ func main() {
 				}
 			},
 		},
-		cli.Command{
+		{
 			Name:    "list-artifacts",
 			Aliases: []string{"artifacts"},
 			Usage:   "Show artifacts for build (default to latest)",
@@ -430,7 +430,7 @@ func main() {
 				t.Flush()
 			},
 		},
-		cli.Command{
+		{
 			Name:  "test-metadata",
 			Usage: "Show test metadata for build",
 			Flags: []cli.Flag{
@@ -474,7 +474,7 @@ func main() {
 				}
 			},
 		},
-		cli.Command{
+		{
 			Name:    "retry-build",
 			Aliases: []string{"retry"},
 			Usage:   "Retry a build",
@@ -509,7 +509,7 @@ func main() {
 				fmt.Println(buildURL(build, c.GlobalString("host")))
 			},
 		},
-		cli.Command{
+		{
 			Name:    "cancel-build",
 			Aliases: []string{"cancel"},
 			Usage:   "Cancel a build",
@@ -543,7 +543,7 @@ func main() {
 				fmt.Printf("canceled build %d\n", build.BuildNum)
 			},
 		},
-		cli.Command{
+		{
 			Name:  "build",
 			Usage: "Trigger a new build",
 			Flags: []cli.Flag{
@@ -582,7 +582,7 @@ func main() {
 				fmt.Println(buildURL(build, c.GlobalString("host")))
 			},
 		},
-		cli.Command{
+		{
 			Name:  "clear-cache",
 			Usage: "Clear the build cache",
 			Flags: []cli.Flag{
@@ -605,7 +605,7 @@ func main() {
 				fmt.Println(status)
 			},
 		},
-		cli.Command{
+		{
 			Name:  "add-env-var",
 			Usage: "Add an environment variable to the project (expects the name and value as arguments)",
 			Flags: []cli.Flag{
@@ -634,7 +634,7 @@ func main() {
 				fmt.Printf("added %s=%s\n", name, value)
 			},
 		},
-		cli.Command{
+		{
 			Name:  "delete-env-var",
 			Usage: "Add an environment variable to the project (expects the name as argument)",
 			Flags: []cli.Flag{
@@ -663,7 +663,7 @@ func main() {
 				fmt.Printf("deleted %s\n", name)
 			},
 		},
-		cli.Command{
+		{
 			Name:  "add-ssh-key",
 			Usage: "Add an SSH key to be used to access external systems (expects the hostname and private key as arguments)",
 			Flags: []cli.Flag{
