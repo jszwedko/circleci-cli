@@ -6,7 +6,7 @@ machine:
 dependencies:
   override:
   - sudo rm -rf /usr/local/go
-  - curl https://storage.googleapis.com/golang/go1.5.2.linux-amd64.tar.gz | sudo tar -C /usr/local -xz
+  - curl https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz | sudo tar -C /usr/local -xz
 
   # Remove cached Go sources
   - rm -rf $HOME/.go_workspace
