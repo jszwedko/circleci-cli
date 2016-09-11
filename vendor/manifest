@@ -4,31 +4,31 @@
 		{
 			"importpath": "github.com/codegangsta/cli",
 			"repository": "https://github.com/codegangsta/cli",
-			"revision": "142e6cd241a4dfbf7f07a018f1f8225180018da4",
+			"revision": "c723b19a84af34d905773672ffa1b8ead802e505",
 			"branch": "master"
 		},
 		{
 			"importpath": "github.com/fatih/color",
 			"repository": "https://github.com/fatih/color",
-			"revision": "f773d4c806cc8e4a5749d6a35e2a4bbcd71443d6",
+			"revision": "87d4004f2ab62d0d255e0a38f1680aa534549fe3",
 			"branch": "master"
 		},
 		{
 			"importpath": "github.com/jszwedko/go-circleci",
 			"repository": "https://github.com/jszwedko/go-circleci",
-			"revision": "ede164e9ca729af9daeae923e0b7c7c1be48e0a1",
+			"revision": "849bb9d5606078eef9ac6e7cce0e6e322a7afe3f",
 			"branch": "master"
 		},
 		{
 			"importpath": "github.com/mattn/go-isatty",
 			"repository": "https://github.com/mattn/go-isatty",
-			"revision": "7fcbc72f853b92b5720db4a6b8482be612daef24",
+			"revision": "66b8e73f3f5cda9f96b69efd03dd3d7fc4a5cdb8",
 			"branch": "master"
 		},
 		{
 			"importpath": "github.com/shiena/ansicolor",
 			"repository": "https://github.com/shiena/ansicolor",
-			"revision": "a5e2b567a4dd6cc74545b8a4f27c9d63b9e7735b",
+			"revision": "a422bbe96644373c5753384a59d678f7d261ff10",
 			"branch": "master"
 		}
 	]

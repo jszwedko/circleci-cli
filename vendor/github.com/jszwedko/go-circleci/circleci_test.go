@@ -157,7 +157,7 @@ func TestClient_ListProjects(t *testing.T) {
 		t.Errorf("Client.ListProjects() returned error: %v", err)
 	}
 
-	want := []*Project{&Project{Reponame: "foo"}}
+	want := []*Project{{Reponame: "foo"}}
 	if !reflect.DeepEqual(projects, want) {
 		t.Errorf("Client.ListProjects() returned %+v, want %+v", projects, want)
 	}
@@ -515,6 +515,29 @@ func TestClient_AddEnvVar(t *testing.T) {
 	}
 }
 
+func TestClient_ListEnvVars(t *testing.T) {
+	setup()
+	defer teardown()
+	mux.HandleFunc("/project/jszwedko/foo/envvar", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "GET")
+		testBody(t, r, "")
+		fmt.Fprint(w, `[{"name": "bar", "value":"xxxbar"}]`)
+	})
+
+	status, err := client.ListEnvVars("jszwedko", "foo")
+	if err != nil {
+		t.Errorf("Client.ListEnvVars(jszwedko, foo) returned error: %v", err)
+	}
+
+	want := []EnvVar{
+		{Name: "bar", Value: "xxxbar"},
+	}
+
+	if !reflect.DeepEqual(status, want) {
+		t.Errorf("Client.ListEnvVars(jszwedko, foo) returned %+v, want %+v", status, want)
+	}
+}
+
 func TestClient_DeleteEnvVar(t *testing.T) {
 	setup()
 	defer teardown()
@@ -601,7 +624,7 @@ func TestClient_ListCheckoutKeys(t *testing.T) {
 		t.Errorf("Client.ListCheckoutKeys(jszwedko, foo) returned error: %v", err)
 	}
 
-	want := []*CheckoutKey{&CheckoutKey{
+	want := []*CheckoutKey{{
 		PublicKey:   "some public key",
 		Type:        "deploy-key",
 		Fingerprint: "37:27:f7:68:85:43:46:d2:e1:30:83:8f:f7:1b:ad:c2",
@@ -708,7 +731,7 @@ func TestClient_AddSSHUser(t *testing.T) {
 		t.Errorf("Client.AddSSHUser(jszwedko, foo, 123) returned error: %v", err)
 	}
 
-	want := &Build{SSHUsers: []*SSHUser{&SSHUser{GithubID: 1234, Login: "jszwedko"}}}
+	want := &Build{SSHUsers: []*SSHUser{{GithubID: 1234, Login: "jszwedko"}}}
 	if !reflect.DeepEqual(build, want) {
 		t.Errorf("Client.AddSSHUser(jszwedko, foo, 123) returned %+v, want %+v", build, want)
 	}
