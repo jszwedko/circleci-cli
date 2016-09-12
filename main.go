@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"net/http"
 	"net/url"
 	"os"
 	"os/exec"
@@ -155,8 +156,7 @@ func main() {
 			Action: func(c *cli.Context) {
 				projects, err := Client.ListProjects()
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				t := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
@@ -268,8 +268,7 @@ func main() {
 						c.Int("offset"))
 				}
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				t := tabwriter.NewWriter(os.Stdout, 0, 8, 4, ' ', tabwriter.StripEscape)
@@ -318,8 +317,7 @@ func main() {
 				if !c.IsSet("build-num") {
 					builds, err := Client.ListRecentBuildsForProject(project.Account, project.Repository, "", "", 1, 0)
 					if err != nil {
-						fmt.Fprintln(os.Stderr, err.Error())
-						os.Exit(1)
+						handleClientError(err)
 					}
 
 					if len(builds) == 0 {
@@ -335,8 +333,7 @@ func main() {
 
 				build, err = Client.GetBuild(project.Account, project.Repository, buildNum)
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				t := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
@@ -402,8 +399,7 @@ func main() {
 				if !c.IsSet("build-num") {
 					builds, err := Client.ListRecentBuildsForProject(project.Account, project.Repository, "", "", 1, 0)
 					if err != nil {
-						fmt.Fprintln(os.Stderr, err.Error())
-						os.Exit(1)
+						handleClientError(err)
 					}
 
 					if len(builds) == 0 {
@@ -418,8 +414,7 @@ func main() {
 
 				artifacts, err := Client.ListBuildArtifacts(project.Account, project.Repository, buildNum)
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				t := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
@@ -458,8 +453,7 @@ func main() {
 
 				metadata, err := Client.ListTestMetadata(project.Account, project.Repository, buildNum)
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				for _, metadatum := range metadata {
@@ -502,8 +496,7 @@ func main() {
 
 				build, err := Client.RetryBuild(project.Account, project.Repository, buildNum)
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				fmt.Println(buildURL(build, c.GlobalString("host")))
@@ -536,8 +529,7 @@ func main() {
 
 				build, err := Client.CancelBuild(project.Account, project.Repository, buildNum)
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				fmt.Printf("canceled build %d\n", build.BuildNum)
@@ -575,8 +567,7 @@ func main() {
 
 				build, err := Client.Build(project.Account, project.Repository, branch)
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				fmt.Println(buildURL(build, c.GlobalString("host")))
@@ -598,8 +589,7 @@ func main() {
 
 				status, err := Client.ClearCache(project.Account, project.Repository)
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				fmt.Println(status)
@@ -627,8 +617,7 @@ func main() {
 
 				_, err := Client.AddEnvVar(project.Account, project.Repository, name, value)
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				fmt.Printf("added %s=%s\n", name, value)
@@ -656,8 +645,7 @@ func main() {
 
 				err := Client.DeleteEnvVar(project.Account, project.Repository, name)
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				fmt.Printf("deleted %s\n", name)
@@ -685,8 +673,7 @@ func main() {
 
 				err := Client.AddSSHKey(project.Account, project.Repository, hostname, privateKey)
 				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
-					os.Exit(1)
+					handleClientError(err)
 				}
 
 				fmt.Printf("added key for %s\n", hostname)
@@ -775,13 +762,37 @@ func buildURL(build *circleci.Build, host string) string {
 func latestBuild(project *Project) *circleci.Build {
 	builds, err := Client.ListRecentBuildsForProject(project.Account, project.Repository, "", "", 1, 0)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
+		handleClientError(err)
 	}
 
 	if len(builds) == 0 {
-		fmt.Fprintln(os.Stderr, fmt.Errorf("no builds"))
-		os.Exit(1)
+		handleClientError(err)
 	}
 	return builds[0]
+}
+
+func handleClientError(err error) {
+	if err == nil {
+		return
+	}
+
+	switch err := err.(type) {
+	case nil:
+		return
+	case *circleci.APIError:
+		switch err.HTTPStatusCode {
+		case http.StatusUnauthorized:
+			if Client.Token == "" {
+				fmt.Fprintln(os.Stderr, "unauthorized -- please supply API token either using -t or using the CIRCLE_TOKEN environment variable")
+			} else {
+				fmt.Fprintln(os.Stderr, "unauthorized -- supplied API token is not valid for this action")
+			}
+		default:
+			fmt.Fprintln(os.Stderr, err.Error())
+		}
+	default:
+		fmt.Fprintln(os.Stderr, err.Error())
+	}
+
+	os.Exit(1)
 }
