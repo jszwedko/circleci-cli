@@ -6,7 +6,6 @@
 
 ## 0.2.0 - 2016-11-19
 Bug fixes:
-* Only query for the current project once (remove duplicate warning messages)
 * Friendlier error messages when CircleCI token is not set
 
 Features:
