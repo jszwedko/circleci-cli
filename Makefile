@@ -2,7 +2,7 @@ export GO15VENDOREXPERIMENT = 1
 
 VERSION := $(shell git describe --tags --always --dirty)
 REVISION := $(shell git rev-parse --sq HEAD)
-PACKAGES :=  $(go list ./... | grep -v '/vendor/')
+PACKAGES := $(shell go list ./... | grep -v '/vendor/')
 
 .DEFAULT_GOAL := check
 
@@ -34,7 +34,7 @@ lint: $(LINT)
 
 .PHONY: test
 test:
-	@go test $(PACKAGES)
+	@go test $(PACKAGES) github.com/jszwedko/circleci-cli/vendor/encoding/json
 
 .PHONY: check
 check: vet lint test build

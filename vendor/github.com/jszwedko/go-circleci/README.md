@@ -1,4 +1,8 @@
-## go-circleci [![GoDoc](https://godoc.org/github.com/jszwedko/go-circleci?status.svg)](http://godoc.org/github.com/jszwedko/go-circleci) [![Circle CI](https://circleci.com/gh/jszwedko/go-circleci.svg?style=svg)](https://circleci.com/gh/jszwedko/go-circleci) [![Go Report Card](https://goreportcard.com/badge/github.com/jszwedko/go-circleci)](https://goreportcard.com/report/github.com/jszwedko/go-circleci)
+## go-circleci
+[![GoDoc](https://godoc.org/github.com/jszwedko/go-circleci?status.svg)](http://godoc.org/github.com/jszwedko/go-circleci)
+[![Circle CI](https://circleci.com/gh/jszwedko/go-circleci.svg?style=svg)](https://circleci.com/gh/jszwedko/go-circleci)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jszwedko/go-circleci)](https://goreportcard.com/report/github.com/jszwedko/go-circleci)
+[![coverage](https://gocover.io/_badge/github.com/jszwedko/go-circleci?0 "coverage")](http://gocover.io/github.com/jszwedko/go-circleci)
 
 Go library for interacting with [CircleCI's API](https://circleci.com/docs/api). Supports all current API endpoints allowing you do do things like:
 
@@ -32,7 +36,7 @@ func main() {
 ```
 
 For the CLI that uses this library (or to see more example usages), please see
-[circle-cli](https://github.com/jszwedko/circleci-cli).
+[circleci-cli](https://github.com/jszwedko/circleci-cli).
 
 Currently in alpha, so the library API may change -- please use your favorite
 Go dependency management solution.

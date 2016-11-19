@@ -49,3 +49,8 @@ Uses [`gvt`](https://github.com/FiloSottile/gvt) to manipulate dependencies.
 - Testing: `make test`
 - Building cross compiled binaries: `make dist` (will install
   [gox](https://github.com/mitchellh/gox) if needed)
+
+**Note:** `encoding/json` is vendored from Go 1.7.1 in order to apply [this
+change](https://go-review.googlesource.com/#/c/18692/) as it is very useful for
+people filing bugs against this project since it causes `encoding/json` to
+output information about the struct it was deserializing into when an error occurs.

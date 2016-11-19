@@ -124,6 +124,11 @@ func main() {
 			Usage:  "API token to use to access CircleCI (not needed for displaying information about public repositories)",
 			EnvVar: "CIRCLE_TOKEN",
 		},
+		cli.BoolFlag{
+			Name:   "debug, d",
+			Usage:  "Enable debug logging",
+			EnvVar: "CIRCLE_DEBUG",
+		},
 	}
 	app.Before = func(c *cli.Context) (err error) {
 		baseURL, err := url.Parse(c.String("host") + "/api/v1/")
@@ -133,7 +138,9 @@ func main() {
 		Client = &circleci.Client{
 			Token:   c.String("token"),
 			BaseURL: baseURL,
+			Debug:   c.Bool("debug"),
 		}
+
 		return nil
 	}
 	app.Commands = []cli.Command{
