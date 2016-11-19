@@ -812,7 +812,7 @@ func handleClientError(err error) {
 		return
 	case *circleci.APIError:
 		switch err.HTTPStatusCode {
-		case http.StatusUnauthorized:
+		case http.StatusUnauthorized, http.StatusForbidden:
 			if Client.Token == "" {
 				fmt.Fprintln(os.Stderr, "unauthorized -- please supply API token either using -t or using the CIRCLE_TOKEN environment variable")
 			} else {
