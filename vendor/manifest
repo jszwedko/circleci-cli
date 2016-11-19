@@ -4,13 +4,13 @@
 		{
 			"importpath": "github.com/codegangsta/cli",
 			"repository": "https://github.com/codegangsta/cli",
-			"revision": "c723b19a84af34d905773672ffa1b8ead802e505",
+			"revision": "b4f4786f378c0c1d3336b5bb798094b166edf5a9",
 			"branch": "master"
 		},
 		{
 			"importpath": "github.com/fatih/color",
 			"repository": "https://github.com/fatih/color",
-			"revision": "87d4004f2ab62d0d255e0a38f1680aa534549fe3",
+			"revision": "bf82308e8c8546dc2b945157173eb8a959ae9505",
 			"branch": "master"
 		},
 		{
@@ -22,7 +22,7 @@
 		{
 			"importpath": "github.com/mattn/go-colorable",
 			"repository": "https://github.com/mattn/go-colorable",
-			"revision": "ed8eb9e318d7a84ce5915b495b7d35e0cfe7b5a8",
+			"revision": "d228849504861217f796da67fae4f6e347643f15",
 			"branch": "master"
 		},
 		{
