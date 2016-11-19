@@ -624,6 +624,30 @@ func main() {
 			},
 		},
 		{
+			Name:  "list-env-vars",
+			Usage: "Lists the environment variables for the project",
+			Flags: []cli.Flag{
+				cli.GenericFlag{
+					Name:   "project, p",
+					Value:  currentProject,
+					Usage:  "Lists the env vars for a specified project rather than the current",
+					EnvVar: "CIRCLE_PROJECT",
+				},
+			},
+			Action: func(c *cli.Context) {
+				project := c.Generic("project").(*Project)
+
+				envVars, err := Client.ListEnvVars(project.Account, project.Repository)
+				if err != nil {
+					handleClientError(err)
+				}
+
+				for _, envVar := range envVars {
+					fmt.Printf("%s=%s\n", envVar.Name, envVar.Value)
+				}
+			},
+		},
+		{
 			Name:  "delete-env-var",
 			Usage: "Add an environment variable to the project (expects the name as argument)",
 			Flags: []cli.Flag{
