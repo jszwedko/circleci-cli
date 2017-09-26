@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
@@ -124,6 +125,12 @@ func main() {
 			Usage:  "API token to use to access CircleCI (not needed for displaying information about public repositories)",
 			EnvVar: "CIRCLE_TOKEN",
 		},
+		cli.StringFlag{
+			Name:   "token-file, f",
+			Value:  "",
+			Usage:  "Load API token from specified file",
+			EnvVar: "CIRCLE_TOKEN_FILE",
+		},
 		cli.BoolFlag{
 			Name:   "debug, d",
 			Usage:  "Enable debug logging",
@@ -135,8 +142,19 @@ func main() {
 		if err != nil {
 			return err
 		}
+
+		token := c.String("token")
+		if token == "" && c.String("token-file") != "" {
+			contents, err := ioutil.ReadFile(c.String("token-file"))
+			if err != nil {
+				return fmt.Errorf("unable to read token-file: %s", err)
+			}
+
+			token = strings.TrimSpace(string(contents))
+		}
+
 		Client = &circleci.Client{
-			Token:   c.String("token"),
+			Token:   token,
 			BaseURL: baseURL,
 			Debug:   c.Bool("debug"),
 		}
