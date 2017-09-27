@@ -136,8 +136,23 @@ func main() {
 			Usage:  "Enable debug logging",
 			EnvVar: "CIRCLE_DEBUG",
 		},
+		cli.StringFlag{
+			Name:  "color",
+			Usage: "Suppress or forcely print highlighting, value can be: auto, always, never",
+			Value: "auto",
+		},
 	}
 	app.Before = func(c *cli.Context) (err error) {
+		if c.String("color") == "always" {
+			color.NoColor = false
+		} else if c.String("color") == "never" {
+			color.NoColor = true
+		} else if c.String("color") != "auto" {
+			return fmt.Errorf(
+				"unexpected --color value: %q", c.String("color"),
+			)
+		}
+
 		baseURL, err := url.Parse(c.String("host") + "/api/v1/")
 		if err != nil {
 			return err
