@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -854,6 +855,12 @@ func handleClientError(err error) {
 		default:
 			fmt.Fprintln(os.Stderr, err.Error())
 		}
+	case *json.UnmarshalTypeError:
+		s := fmt.Sprintf("UnmarshalTypeError: Value[%s] Type[%v]\n", err.Value, err.Type)
+		fmt.Fprint(os.Stderr, s)
+	case *json.InvalidUnmarshalError:
+		s := fmt.Sprintf("InvalidUnmarshalError: Type[%v]\n", err.Type)
+		fmt.Fprint(os.Stderr, s)
 	default:
 		fmt.Fprintln(os.Stderr, err.Error())
 	}
