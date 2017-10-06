@@ -377,7 +377,7 @@ func main() {
 				}
 
 				t := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
-				fmt.Fprintf(t, "Build\t%d\n", build.BuildNum)
+				fmt.Fprintf(t, "Build\t%d %s\n", build.BuildNum, buildURL(build, c.GlobalString("host")))
 				fmt.Fprintf(t, "Subject\t%s\n", build.Subject)
 				fmt.Fprintf(t, "Trigger\t%s\n", build.Why)
 				fmt.Fprintf(t, "Author\t%s\n", build.AuthorName)
