@@ -153,7 +153,7 @@ func main() {
 			)
 		}
 
-		baseURL, err := url.Parse(c.String("host") + "/api/v1/")
+		baseURL, err := url.Parse(c.String("host") + "/api/v1.1/")
 		if err != nil {
 			return err
 		}
