@@ -4,11 +4,14 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"os"
 	"os/exec"
+	"path/filepath"
+	"regexp"
 	"strings"
 	"text/tabwriter"
 	"time"
@@ -103,6 +106,35 @@ func (p *Project) String() string {
 		return ""
 	}
 	return fmt.Sprintf("%s/%s", p.Account, p.Repository)
+}
+
+// Download 'url' to local file 'filename', creating directories as required
+func downloadFile(filename string, url string) (err error) {
+	if err := os.MkdirAll(filepath.Dir(filename), 0755); err != nil {
+		return err
+	}
+	out, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("bad status: %s", resp.Status)
+	}
+
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func main() {
@@ -431,6 +463,12 @@ func main() {
 					Usage:  "Show artifacts for specified build num (leave empty for latest)",
 					EnvVar: "CIRCLE_BUILD_NUM",
 				},
+				cli.StringFlag{
+					Name:   "download, d",
+					Value:  "",
+					Usage:  "Download artifacts that match this pattern",
+					EnvVar: "CIRCLE_DOWNLOAD_PATTERN",
+				},
 			},
 			Action: func(c *cli.Context) {
 				var buildNum int
@@ -459,8 +497,24 @@ func main() {
 
 				t := tabwriter.NewWriter(os.Stdout, 0, 8, 2, ' ', 0)
 				fmt.Fprintf(t, "Node\tPath\tURL\n")
+				var re *regexp.Regexp
+				if c.IsSet("download") {
+					re, err = regexp.Compile(c.String("download"))
+					if err != nil {
+						fmt.Fprintln(os.Stderr, err)
+						os.Exit(1)
+					}
+				}
 				for _, artifact := range artifacts {
 					fmt.Fprintf(t, "%d\t%s\t%s\n", artifact.NodeIndex, artifact.Path, artifact.URL)
+					if re != nil {
+						if re.MatchString(artifact.Path) {
+							if err := downloadFile(artifact.Path, artifact.URL); err != nil {
+								fmt.Fprintln(os.Stderr, err)
+								os.Exit(1)
+							}
+						}
+					}
 				}
 				t.Flush()
 			},
