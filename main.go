@@ -241,8 +241,8 @@ func main() {
 			},
 		},
 		{
-			Name:    "recent-builds",
-			Aliases: []string{"recent"},
+			Name:    "recent",
+			Aliases: []string{"r"},
 			Usage:   "Recent builds for the current project",
 			Flags: []cli.Flag{
 				cli.IntFlag{
@@ -313,7 +313,7 @@ func main() {
 
 				t := tabwriter.NewWriter(os.Stdout, 0, 8, 4, ' ', tabwriter.StripEscape)
 				for _, build := range builds {
-					fmt.Fprintf(t, "%s/%s/%d\t%s\t%s\t%s\n", build.Username, build.Reponame, build.BuildNum, statusSprintfFunc(build.Status)("\xff%s\xff", build.Status), build.Branch, build.Subject)
+					fmt.Fprintf(t, "%s/%d %s\t%s\t%s\t%s\n", build.Reponame, build.BuildNum, build.Workflows.JobName, statusSprintfFunc(build.Status)("\xff%s\xff", build.Status), build.Branch, build.Subject)
 				}
 				t.Flush()
 			},
