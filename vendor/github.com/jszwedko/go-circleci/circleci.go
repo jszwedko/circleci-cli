@@ -698,6 +698,17 @@ type BuildUser struct {
 	Name   *string `json:"name"`
 }
 
+type Workflows struct {
+	JobName                string        `json:"job_name"`
+	JobID                  string        `json:"job_id"`
+	WorkflowID             string        `json:"workflow_id"`
+	WorkspaceID            string        `json:"workspace_id"`
+	UpstreamJobIds         []interface{} `json:"upstream_job_ids"`
+	UpstreamConcurrencyMap struct {
+	} `json:"upstream_concurrency_map"`
+	WorkflowName string `json:"workflow_name"`
+}
+
 // Build represents the details of a build
 type Build struct {
 	AllCommitDetails        []*CommitDetails  `json:"all_commit_details"`
@@ -748,6 +759,7 @@ type Build struct {
 	VcsRevision             string            `json:"vcs_revision"`
 	VCSURL                  string            `json:"vcs_url"`
 	Why                     string            `json:"why"`
+	Workflows               *Workflows        `json:"workflows"`
 }
 
 // Step represents an individual step in a build

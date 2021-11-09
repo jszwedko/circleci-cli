@@ -1,0 +1,19 @@
+# github.com/codegangsta/cli v1.18.1-0.20161113233518-b4f4786f378c
+## explicit
+github.com/codegangsta/cli
+# github.com/fatih/color v1.1.1-0.20161025120501-bf82308e8c85
+## explicit
+github.com/fatih/color
+# github.com/jszwedko/go-circleci v0.0.0-20160911223459-615d5d968cf4
+## explicit
+github.com/jszwedko/go-circleci
+# github.com/mattn/go-colorable v0.0.7
+## explicit
+github.com/mattn/go-colorable
+# github.com/mattn/go-isatty v0.0.0-20160806122752-66b8e73f3f5c
+## explicit
+github.com/mattn/go-isatty
+# golang.org/x/sys v0.0.0-20211103235746-7861aae1554b
+## explicit; go 1.17
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
